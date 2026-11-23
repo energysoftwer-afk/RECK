@@ -2,37 +2,944 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    ...
-    <title>...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RECK | The Best Selling Second-Hand Devices</title>
     <style>
-        /* all your CSS here */
+        :root {
+            --bg-dark: #090a0f;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --accent-primary: #00f2fe;
+            --accent-secondary: #4facfe;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(79, 172, 254, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -150px;
+            left: -150px;
+            z-index: -1;
+            animation: floatGlow 12s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        .ambient-glow-2 {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -100px;
+            right: -100px;
+            z-index: -1;
+            animation: floatGlow 15s infinite alternate-reverse ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 80px) scale(1.2); }
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(9, 10, 15, 0.75);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, #fff, var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 5% 2rem;
+        }
+
+        .hero-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            color: var(--accent-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #090a0f;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Sections */
+        .section {
+            padding: 4.5rem 8%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 1.6rem;
+            backdrop-filter: blur(12px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 242, 254, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.12);
+        }
+
+        .condition-tag {
+            position: absolute;
+            top: 1.3rem;
+            right: 1.3rem;
+            padding: 0.3rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 5;
+        }
+
+        .condition-mint { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+        .condition-used { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+        .condition-parts { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+        .condition-sold { background: rgba(239, 68, 68, 0.25); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.45); }
+
+        /* Device Showcase */
+        .device-showcase {
+            width: 100%;
+            height: 230px;
+            background: radial-gradient(circle at center, rgba(79, 172, 254, 0.1) 0%, rgba(255,255,255,0.02) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.4rem;
+            border: 1px solid var(--border-glass);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===== PHONE MOCKUP ===== */
+        .phone-mockup {
+            width: 95px;
+            height: 175px;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 2px solid #38bdf8;
+            border-radius: 18px;
+            padding: 11px 7px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 12px 28px rgba(0, 242, 254, 0.25);
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .phone-mockup {
+            transform: scale(1.07) rotate(-2deg);
+        }
+
+        .phone-speaker {
+            width: 26px;
+            height: 3px;
+            background: #475569;
+            border-radius: 2px;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 132px;
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            border-radius: 7px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            padding: 5px;
+            position: relative;
+            overflow: hidden;
+            line-height: 1.3;
+        }
+
+        /* J4+ cracked screen */
+        .phone-screen.j4-screen {
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+        }
+
+        .crack-line {
+            position: absolute;
+            width: 140%;
+            height: 1.5px;
+            background: rgba(255, 255, 255, 0.7);
+            top: 32%;
+            left: -20%;
+            transform: rotate(26deg);
+            box-shadow: 0 0 4px rgba(255,255,255,0.8);
+        }
+
+        .crack-line-2 {
+            position: absolute;
+            width: 70%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.5);
+            top: 40%;
+            left: 20%;
+            transform: rotate(-15deg);
+        }
+
+        /* Redmi backlight only */
+        .phone-screen.backlight-only {
+            background: radial-gradient(circle, #334155 0%, #1e293b 70%, #0f172a 100%);
+            box-shadow: inset 0 0 18px rgba(148, 163, 184, 0.4);
+            color: rgba(255,255,255,0.75);
+        }
+
+        .phone-btn {
+            width: 24px;
+            height: 7px;
+            border: 1px solid #64748b;
+            border-radius: 4px;
+        }
+
+        /* ===== BLACKBERRY MOCKUP ===== */
+        .bb-mockup {
+            width: 108px;
+            height: 172px;
+            background: linear-gradient(145deg, #1f242d, #0d1015);
+            border: 2px solid #64748b;
+            border-radius: 22px;
+            padding: 10px 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.55);
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .bb-mockup {
+            transform: scale(1.06) rotate(1deg);
+        }
+
+        .bb-screen {
+            width: 100%;
+            height: 68px;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: #e2e8f0;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .bb-trackpad-bar {
+            width: 100%;
+            height: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bb-trackpad {
+            width: 15px;
+            height: 15px;
+            background: #0f172a;
+            border: 1px solid #94a3b8;
+            border-radius: 3px;
+        }
+
+        .bb-keyboard {
+            width: 100%;
+            height: 56px;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2.5px;
+            padding: 2px;
+        }
+
+        .bb-key {
+            background: #272e3b;
+            border-radius: 2px;
+            border-bottom: 1px solid #475569;
+        }
+
+        /* ===== LAPTOP MOCKUP (Toshiba) ===== */
+        .laptop-mockup {
+            width: 180px;
+            height: 120px;
+            position: relative;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .laptop-mockup {
+            transform: scale(1.06) rotate(-1deg);
+        }
+
+        .laptop-screen {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 3px solid #475569;
+            border-radius: 8px 8px 2px 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .laptop-display {
+            width: 92%;
+            height: 85%;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-align: center;
+            position: relative;
+        }
+
+        .laptop-display::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #1e293b;
+            border-radius: 50%;
+            top: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px solid #334155;
+        }
+
+        /* black dot defect */
+        .black-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #000;
+            border-radius: 50%;
+            top: 35%;
+            right: 28%;
+            box-shadow: 0 0 4px rgba(0,0,0,0.8);
+        }
+
+        .laptop-base {
+            width: 110%;
+            height: 12px;
+            background: linear-gradient(to bottom, #334155, #1e293b);
+            border-radius: 0 0 6px 6px;
+            margin-left: -5%;
+            position: relative;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+
+        .laptop-base::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: #475569;
+            border-radius: 2px;
+        }
+
+        /* Product text */
+        .product-card h3 {
+            font-size: 1.28rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 0.93rem;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+            line-height: 1.55;
+        }
+
+        .specs-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.3rem;
+        }
+
+        .spec-pill {
+            font-size: 0.73rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: #cbd5e1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.1rem;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .price {
+            font-size: 1.55rem;
+            font-weight: 900;
+            color: var(--accent-primary);
+        }
+
+        .buy-btn {
+            padding: 0.7rem 1.4rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: #090a0f;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .buy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 18px rgba(0, 242, 254, 0.4);
+        }
+
+        .buy-btn.sold-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .buy-btn.sold-btn:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Sold */
+        .sold-card {
+            opacity: 0.82;
+        }
+
+        .sold-stamp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-12deg);
+            border: 3px solid #ef4444;
+            color: #ef4444;
+            background: rgba(9, 10, 15, 0.88);
+            padding: 0.35rem 1.3rem;
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            border-radius: 8px;
+            z-index: 6;
+            pointer-events: none;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 5%;
+            border-top: 1px solid var(--border-glass);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(9, 10, 15, 0.93);
+            backdrop-filter: blur(18px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .loading-modal {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .loading-overlay.active .loading-modal {
+            transform: scale(1);
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0, 242, 254, 0.15);
+            border-top: 4px solid var(--accent-primary);
+            border-right: 4px solid var(--accent-secondary);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-modal h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.6rem;
+            background: linear-gradient(90deg, #fff, var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .loading-modal p {
+            color: var(--text-muted);
+            margin-bottom: 1.6rem;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 7px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 10px;
+        }
+
+        .loading-overlay.active .progress-fill {
+            animation: fillBar 5s linear forwards;
+        }
+
+        @keyframes fillBar {
+            to { width: 100%; }
+        }
+
+        @media (max-width: 700px) {
+            .nav-links { gap: 1rem; font-size: 0.9rem; }
+            .product-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ambient glows, nav, hero, products, etc. -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow-2"></div>
 
-    <!-- Modal -->
-    <div class="modal-overlay" id="buyModal" onclick="closeBuyModal(event)">
-        <div class="modal-box">
+    <nav>
+        <div class="logo">RECK</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#available">Available Now</a></li>
+            <li><a href="#sold">Recently Sold</a></li>
+            <li><a href="#why">Why RECK</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">CERTIFIED PRE-OWNED TECH</div>
+        <h1>RECK</h1>
+        <p>The best selling second-hand devices. Honest descriptions, fair prices, and deals that move fast.</p>
+        <a href="#available" class="cta-btn">Browse Available Tech</a>
+    </section>
+
+    <!-- Available Devices -->
+    <section class="section" id="available">
+        <div class="section-header">
+            <h2>Available Devices</h2>
+            <p>Grab them before they're gone—our inventory moves quick.</p>
+        </div>
+
+        <div class="product-grid">
+
+            <!-- 1. Samsung Galaxy Express 2 -->
+            <div class="product-card">
+                <span class="condition-tag condition-mint">Mint Condition</span>
+                <div class="device-showcase">
+                    <div class="phone-mockup">
+                        <div class="phone-speaker"></div>
+                        <div class="phone-screen">SAMSUNG<br>Android 7 ROM</div>
+                        <div class="phone-btn"></div>
+                    </div>
+                </div>
+                <h3>Samsung Galaxy Express 2</h3>
+                <p class="product-desc">Flawless collector's condition with zero scratches. Upgraded with a smooth Android 7 Custom ROM.</p>
+                <div class="specs-list">
+                    <span class="spec-pill">Blue</span>
+                    <span class="spec-pill">Android 7 Custom ROM</span>
+                    <span class="spec-pill">100% Tested</span>
+                </div>
+                <div class="card-footer">
+                    <div class="price">$15</div>
+                    <button class="buy-btn" onclick="startPurchaseRedirect('https://www.vinted.ro/items/10904923131-samsung-galaxy-express-2-ca-nou-mint-android-7-custom-rom-colectie')">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 2. Samsung Galaxy J4+ -->
+            <div class="product-card">
+                <span class="condition-tag condition-used">Fair / Working</span>
+                <div class="device-showcase">
+                    <div class="phone-mockup">
+                        <div class="phone-speaker"></div>
+                        <div class="phone-screen j4-screen">
+                            GALAXY J4+
+                            <div class="crack-line"></div>
+                            <div class="crack-line-2"></div>
+                        </div>
+                        <div class="phone-btn"></div>
+                    </div>
+                </div>
+                <h3>Samsung Galaxy J4+</h3>
+                <p class="product-desc">Works great and 100% responsive. Glass has a crack, though the LCD panel underneath is intact. Back cover shows heavy scratches and heat marks.</p>
+                <div class="specs-list">
+                    <span class="spec-pill">Works Great</span>
+                    <span class="spec-pill">Full Touch</span>
+                    <span class="spec-pill">Glass Crack</span>
+                    <span class="spec-pill">Heat Marks</span>
+                </div>
+                <div class="card-footer">
+                    <div class="price">$18</div>
+                    <button class="buy-btn" onclick="startPurchaseRedirect('https://www.vinted.ro/items/10929068659-samsung-galaxy-j4-fully-functional-cracked-glass-back-wear')">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 3. Xiaomi Redmi 3S -->
+            <div class="product-card">
+                <span class="condition-tag condition-parts">For Parts / Fixable</span>
+                <div class="device-showcase">
+                    <div class="phone-mockup">
+                        <div class="phone-speaker"></div>
+                        <div class="phone-screen backlight-only">REDMI 3S<br>Backlight On</div>
+                        <div class="phone-btn"></div>
+                    </div>
+                </div>
+                <h3>Xiaomi Redmi 3S</h3>
+                <p class="product-desc">Untested project device. Screen looks mint and the back housing is in good shape. Responds to charger by lighting up the backlight (no boot logo).</p>
+                <div class="specs-list">
+                    <span class="spec-pill">Mint Screen</span>
+                    <span class="spec-pill">Backlight Works</span>
+                    <span class="spec-pill">No Logo</span>
+                    <span class="spec-pill">Fixer Upper</span>
+                </div>
+                <div class="card-footer">
+                    <div class="price">$10</div>
+                    <button class="buy-btn" onclick="startPurchaseRedirect('https://www.vinted.ro/items/10931035941-xiaomi-redmi-3s-pentru-piese-defect-baterie-lipsa-tavita-sim')">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- 4. Toshiba Satellite L455D -->
+            <div class="product-card">
+                <span class="condition-tag condition-used">Fair / Working</span>
+                <div class="device-showcase">
+                    <div class="laptop-mockup">
+                        <div class="laptop-screen">
+                            <div class="laptop-display">
+                                TOSHIBA<br>Satellite L455D
+                                <div class="black-dot"></div>
+                            </div>
+                        </div>
+                        <div class="laptop-base"></div>
+                    </div>
+                </div>
+                <h3>Laptop Toshiba Satellite L455D</h3>
+                <p class="product-desc">Works pretty good! Does not include a battery or charger, and has a black dot on the screen. Press Buy Now to check photos.</p>
+                <div class="specs-list">
+                    <span class="spec-pill">Works Pretty Good</span>
+                    <span class="spec-pill">No Battery</span>
+                    <span class="spec-pill">No Charger</span>
+                    <span class="spec-pill">Screen Black Dot</span>
+                </div>
+                <div class="card-footer">
+                    <div class="price">Check Listing</div>
+                    <button class="buy-btn" onclick="startPurchaseRedirect('https://www.vinted.ro/items/10942633674-toshiba-l455d-laptop-4gb700gb-no-charger-no-battery')">Buy Now</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Recently Sold -->
+    <section class="section" id="sold">
+        <div class="section-header">
+            <h2>Blink & You'll Miss It</h2>
+            <p>See how fast devices sell once they hit RECK.</p>
+        </div>
+
+        <div class="product-grid" style="max-width: 380px; margin: 0 auto;">
+            <div class="product-card sold-card">
+                <span class="condition-tag condition-sold">Sold Out</span>
+                <div class="sold-stamp">SOLD FAST</div>
+                <div class="device-showcase">
+                    <div class="bb-mockup">
+                        <div class="bb-screen">BlackBerry<br>Curve • Unlocked</div>
+                        <div class="bb-trackpad-bar">
+                            <div class="bb-trackpad"></div>
+                        </div>
+                        <div class="bb-keyboard">
+                            <div class="bb-key"></div><div class="bb-key"></div><div class="bb-key"></div>
+                            <div class="bb-key"></div><div class="bb-key"></div><div class="bb-key"></div>
+                            <div class="bb-key"></div><div class="bb-key"></div><div class="bb-key"></div>
+                            <div class="bb-key"></div><div class="bb-key"></div><div class="bb-key"></div>
+                            <div class="bb-key"></div><div class="bb-key"></div><div class="bb-key"></div>
+                            <div class="bb-key"></div><div class="bb-key"></div><div class="bb-key"></div>
+                            <div class="bb-key"></div><div class="bb-key"></div><div class="bb-key"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>BlackBerry Curve</h3>
+                <p class="product-desc">Heavily used with plenty of scratches, network unlocked and 100% working. Snapped up shortly after listing on RECK!</p>
+                <div class="specs-list">
+                    <span class="spec-pill">Network Unlocked</span>
+                    <span class="spec-pill">Sold Quickly</span>
+                </div>
+                <div class="card-footer">
+                    <div class="price">$10</div>
+                    <button class="buy-btn sold-btn" disabled>Sold Out</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why RECK -->
+    <section class="section" id="why">
+        <div class="section-header">
+            <h2>Why Buy From RECK?</h2>
+            <p>Second-hand doesn't mean second-rate.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>100% Honest Grading</h3>
+                <p>Every scratch, crack, or quirk is disclosed upfront—no nasty surprises.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast-Moving Deals</h3>
+                <p>Priced to sell fast for collectors, modders, and smart everyday buyers.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌱</div>
+                <h3>Eco-Smart Choice</h3>
+                <p>Save money and keep working or fixable tech out of landfills.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="margin-bottom: 0.8rem;">RECK</div>
+        <p>The Best Selling Second-Hand Devices.</p>
+        <p style="margin-top: 0.5rem;">© 2026 RECK. All rights reserved.</p>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-modal">
+            <div class="spinner"></div>
             <h3>Awesome taste!</h3>
-            <p id="modalText">Wait a little, our servers are loading...</p>
-            <button onclick="document.getElementById('buyModal').classList.remove('active')">Close</button>
+            <p>Wait a little, our servers are loading...</p>
+            <div class="progress-track">
+                <div class="progress-fill"></div>
+            </div>
         </div>
     </div>
 
     <script>
-        function openBuyModal(deviceName) {
-            const modal = document.getElementById('buyModal');
-            const text = document.getElementById('modalText');
-            text.textContent = "Loading listing & photos for " + deviceName + "... Wait a little, our servers are loading...";
-            modal.classList.add('active');
-        }
+        function startPurchaseRedirect(url) {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('active');
 
-        function closeBuyModal(e) {
-            if (e.target.id === 'buyModal') {
-                document.getElementById('buyModal').classList.remove('active');
-            }
+            const fill = overlay.querySelector('.progress-fill');
+            fill.style.animation = 'none';
+            fill.offsetHeight;
+            fill.style.animation = null;
+
+            setTimeout(() => {
+                window.location.href = url;
+            }, 5000);
         }
     </script>
 </body>
