@@ -252,11 +252,22 @@
             transform: scale(1.07) rotate(-2deg);
         }
 
+        /* Huawei Amber Brown variant */
+        .phone-mockup.huawei {
+            background: linear-gradient(145deg, #5c4033, #3d2b22);
+            border: 2px solid #c4a484;
+            box-shadow: 0 12px 28px rgba(196, 164, 132, 0.25);
+        }
+
         .phone-speaker {
             width: 26px;
             height: 3px;
             background: #475569;
             border-radius: 2px;
+        }
+
+        .phone-mockup.huawei .phone-speaker {
+            background: #8b7355;
         }
 
         .phone-screen {
@@ -278,37 +289,31 @@
             line-height: 1.3;
         }
 
-        /* J4+ cracked screen */
-        .phone-screen.j4-screen {
-            background: linear-gradient(135deg, #2563eb, #60a5fa);
+        .phone-mockup.huawei .phone-screen {
+            background: linear-gradient(135deg, #1e3a5f, #2c5282);
         }
 
-        .crack-line {
+        /* Very subtle camera crack (almost invisible) */
+        .camera-crack {
             position: absolute;
-            width: 140%;
-            height: 1.5px;
-            background: rgba(255, 255, 255, 0.7);
-            top: 32%;
-            left: -20%;
-            transform: rotate(26deg);
-            box-shadow: 0 0 4px rgba(255,255,255,0.8);
+            top: 8px;
+            right: 10px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .crack-line-2 {
+        .camera-crack::after {
+            content: '';
             position: absolute;
-            width: 70%;
+            width: 18px;
             height: 1px;
-            background: rgba(255, 255, 255, 0.5);
-            top: 40%;
-            left: 20%;
-            transform: rotate(-15deg);
-        }
-
-        /* Redmi backlight only */
-        .phone-screen.backlight-only {
-            background: radial-gradient(circle, #334155 0%, #1e293b 70%, #0f172a 100%);
-            box-shadow: inset 0 0 18px rgba(148, 163, 184, 0.4);
-            color: rgba(255,255,255,0.75);
+            background: rgba(255,255,255,0.25);
+            top: 6px;
+            left: -2px;
+            transform: rotate(35deg);
         }
 
         .phone-btn {
@@ -316,6 +321,10 @@
             height: 7px;
             border: 1px solid #64748b;
             border-radius: 4px;
+        }
+
+        .phone-mockup.huawei .phone-btn {
+            border-color: #a08b6e;
         }
 
         /* ===== BLACKBERRY MOCKUP ===== */
@@ -440,7 +449,6 @@
             border: 1px solid #334155;
         }
 
-        /* black dot defect */
         .black-dot {
             position: absolute;
             width: 6px;
@@ -758,59 +766,35 @@
                 </div>
             </div>
 
-            <!-- 2. Samsung Galaxy J4+ -->
+            <!-- 2. Huawei Y6 2019 Amber Brown -->
             <div class="product-card">
-                <span class="condition-tag condition-used">Fair / Working</span>
+                <span class="condition-tag condition-mint">Mint Condition</span>
                 <div class="device-showcase">
-                    <div class="phone-mockup">
+                    <div class="phone-mockup huawei">
                         <div class="phone-speaker"></div>
-                        <div class="phone-screen j4-screen">
-                            GALAXY J4+
-                            <div class="crack-line"></div>
-                            <div class="crack-line-2"></div>
+                        <div class="phone-screen">
+                            HUAWEI Y6<br>2019
+                            <div class="camera-crack" title="Very subtle camera glass crack"></div>
                         </div>
                         <div class="phone-btn"></div>
                     </div>
                 </div>
-                <h3>Samsung Galaxy J4+</h3>
-                <p class="product-desc">Works great and 100% responsive. Glass has a crack, though the LCD panel underneath is intact. Back cover shows heavy scratches and heat marks.</p>
+                <h3>Huawei Y6 2019</h3>
+                <p class="product-desc">Amber Brown edition in excellent mint condition. Everything works perfectly. Only tiny cosmetic imperfections and a very unnoticeable crack on the camera glass that does not affect photo or video quality at all. Comes with original box and tempered glass.</p>
                 <div class="specs-list">
-                    <span class="spec-pill">Works Great</span>
-                    <span class="spec-pill">Full Touch</span>
-                    <span class="spec-pill">Glass Crack</span>
-                    <span class="spec-pill">Heat Marks</span>
+                    <span class="spec-pill">Amber Brown</span>
+                    <span class="spec-pill">Mint</span>
+                    <span class="spec-pill">Original Box</span>
+                    <span class="spec-pill">Tempered Glass</span>
+                    <span class="spec-pill">Camera Crack (invisible)</span>
                 </div>
                 <div class="card-footer">
-                    <div class="price">$18</div>
-                    <button class="buy-btn" onclick="startPurchaseRedirect('https://www.vinted.ro/items/10929068659-samsung-galaxy-j4-fully-functional-cracked-glass-back-wear')">Buy Now</button>
+                    <div class="price">Check Listing</div>
+                    <button class="buy-btn" onclick="startPurchaseRedirect('https://www.vinted.ro/items/10956688633-huawei-y6-2019-amber-brown-mint-original-box-tempered-glass')">Buy Now</button>
                 </div>
             </div>
 
-            <!-- 3. Xiaomi Redmi 3S -->
-            <div class="product-card">
-                <span class="condition-tag condition-parts">For Parts / Fixable</span>
-                <div class="device-showcase">
-                    <div class="phone-mockup">
-                        <div class="phone-speaker"></div>
-                        <div class="phone-screen backlight-only">REDMI 3S<br>Backlight On</div>
-                        <div class="phone-btn"></div>
-                    </div>
-                </div>
-                <h3>Xiaomi Redmi 3S</h3>
-                <p class="product-desc">Untested project device. Screen looks mint and the back housing is in good shape. Responds to charger by lighting up the backlight (no boot logo).</p>
-                <div class="specs-list">
-                    <span class="spec-pill">Mint Screen</span>
-                    <span class="spec-pill">Backlight Works</span>
-                    <span class="spec-pill">No Logo</span>
-                    <span class="spec-pill">Fixer Upper</span>
-                </div>
-                <div class="card-footer">
-                    <div class="price">$10</div>
-                    <button class="buy-btn" onclick="startPurchaseRedirect('https://www.vinted.ro/items/10931035941-xiaomi-redmi-3s-pentru-piese-defect-baterie-lipsa-tavita-sim')">Buy Now</button>
-                </div>
-            </div>
-
-            <!-- 4. Toshiba Satellite L455D -->
+            <!-- 3. Toshiba Satellite L455D -->
             <div class="product-card">
                 <span class="condition-tag condition-used">Fair / Working</span>
                 <div class="device-showcase">
@@ -833,7 +817,7 @@
                     <span class="spec-pill">Screen Black Dot</span>
                 </div>
                 <div class="card-footer">
-                    <div class="price">40$</div>
+                    <div class="price">Check Listing</div>
                     <button class="buy-btn" onclick="startPurchaseRedirect('https://www.vinted.ro/items/10942633674-toshiba-l455d-laptop-4gb700gb-no-charger-no-battery')">Buy Now</button>
                 </div>
             </div>
@@ -944,4 +928,3 @@
     </script>
 </body>
 </html>
-
